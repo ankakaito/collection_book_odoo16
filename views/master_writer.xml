@@ -1,0 +1,59 @@
+<odoo>
+    <data>
+        <record id="view_master_writer_form" model="ir.ui.view">
+            <field name="name">Master Writer Form</field>
+            <field name="model">master.writer</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="book_count_button_action" type="object" class="oe_stat_button" icon="fa-book">
+                                <div class="o_stat_info">
+                                    <field name="book_count" class="o_stat_value"/>
+                                    <span class="o_stat_text">Book Writed</span>
+                                </div>
+                            </button>
+                        </div>
+                        <group>
+                           <group>
+                                <field name="name" required="1"/>
+                                <field name="phone" required="1"/>
+                                <!-- <field name="book_writed" required="1" domain="[('writer_ids', '=',name)]"/>
+                                <field name="book_writed" required="1" domain="[('writer_ids', '=', name)]"/> -->
+                            </group>
+                            <group>
+                               <field name="email" required="1"/>
+                               <field name="city" required="1"/>
+                               <field name="country" required="1"/>
+                           </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_master_writer_tree" model="ir.ui.view">
+            <field name="name">Master Writer tree</field>
+            <field name="model">master.writer</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                    <field name="city"/>
+                    <field name="country"/>
+                </tree>
+             </field>
+        </record>
+        <record id="action_master_writer" model="ir.actions.act_window">
+            <field name="name">Master Writer</field>
+            <field name="res_model">master.writer</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+            id="master_writer_submenu"
+            name="Master Writer"
+            action="action_master_writer"
+            parent="collection_book.master_menu"/>
+    </data>
+</odoo>

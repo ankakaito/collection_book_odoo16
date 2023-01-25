@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_collection_list_book,collection_book.list_book,model_list_book,,1,1,1,1
+access_collection_member,collection_book.member,model_member,,1,1,1,1
+access_collection_book_management,collection_book.book_management,model_book_management,,1,1,1,1
+access_collection_category,collection_book.category,model_category,,1,1,1,1
+access_collection_master_writer,collection_book.master_writer,model_master_writer,,1,1,1,1
+access_collection_book_transaction,collection_book.book_transaction,model_book_transaction,,1,1,1,1
+access_collection_book_transaction_line,collection_book.book_transaction_line,model_book_transaction_line,,1,1,1,1

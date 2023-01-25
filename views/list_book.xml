@@ -1,0 +1,71 @@
+<odoo>
+    <data>
+        <record id="view_list_book_form" model="ir.ui.view">
+            <field name="name">List Book Form</field>
+            <field name="model">list.book</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="" type="" class="" icon="fa-book">
+                                <div class="o_stat_info">
+                                    <!-- <field name="" class=""/> -->
+                                    <span class="o_stat_text"></span>
+                                </div>
+                            </button>
+                        </div>
+                        <group>
+                           <group>
+                                <field name="name" required="1"/>
+                                <field name="launcing_date" required="1"/>
+                            </group>
+                            <group>
+                               <field name="category_ids" required="1"/>
+                                <field name="isbn_code" required="1"/>
+                           </group>
+                        </group>
+                        <notebook>
+                            <page string=" Author ">
+                                <tree editable="bottom">
+                                    <field name="writer_ids" required="1"/>
+                                </tree>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_list_book_tree" model="ir.ui.view">
+            <field name="name">List Book tree</field>
+            <field name="model">list.book</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="category_ids"/>
+                    <field name="launcing_date"/>
+                </tree>
+             </field>
+        </record>
+                
+        <record id="action_list_book" model="ir.actions.act_window">
+            <field name="name">List Book</field>
+            <field name="res_model">list.book</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+            id="root_list_book_menu"
+            name="Book Repository"/>
+
+        <menuitem
+            id="master_menu"
+            name="Master"
+            action=""
+            parent="collection_book.root_list_book_menu"/>
+        <menuitem
+            id="list_master_submenu"
+            name="Master Book"
+            action="action_list_book"
+            parent="collection_book.master_menu"/>
+    </data>
+</odoo>

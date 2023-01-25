@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <!-- Sequences Transaction -->
+        <record id="seq_book_transaction" model="ir.sequence">
+            <field name="name">Transaction Code</field>
+            <field name="code">seq.book.transaction</field>
+            <field name="prefix">TR</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+            <field name="active">TRUE</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+    </data>
+</odoo>
