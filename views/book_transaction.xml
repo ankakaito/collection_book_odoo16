@@ -5,6 +5,12 @@
             <field name="model">book.transaction</field>
             <field name="arch" type="xml">
                 <form>
+                    <header>
+                        <button type="object" name="func_to_approve" string="To Approve" class="oe_highLight"/>
+                        <button type="object" name="func_approved" string="Approved" class="oe_highLight"/>
+                        <button type="object" name="func_done" string="Set To Done" class="oe_highLight"/>
+                        <field name="status" widget="statusbar"/>
+                    </header>
                     <sheet>
                         <group>
                             <group>

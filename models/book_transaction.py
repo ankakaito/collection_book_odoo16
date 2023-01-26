@@ -27,7 +27,6 @@ class BookTransactionLine(models.Model):
     def onchange_management_id(self):
         for rec in self:
             if rec.management_id:
-                #rec.qty = rec.management_id.amount_borrowed
                 rec.book_title = rec.management_id.book_id.name
 
 
@@ -36,12 +35,24 @@ class BookTransaction(models.Model):
     _name = 'book.transaction'
     _description = 'Book Transaction'
 
+    def func_to_approve(self):
+        if self.status == 'draft':
+            self.status = 'to_approve'
+
+    def func_approved(self):
+        if self.status == 'to_approve':
+            self.status = 'approved'
+
+    def func_done(self):
+        if self.status == 'approved':
+            self.status = 'done'
+
     name = fields.Char(string="Transaction Number", default='New')
     member_id = fields.Many2one('member',"Member Name")
     borrowing_date = fields.Date(string="Borrowing Date", default=fields.Date.today())
     returning_date= fields.Datetime(string="Returning Date")
     transaction_ids = fields.One2many('book.transaction.line','transaction_id',"List Book Management")
-
+    status = fields.Selection([('draft','Draft'),('to_approve','To Approve'),('approved','To Approved'),('done','Done')], default='draft')
     @api.model
     def create(self, vals):
         if vals.get('name', 'New') == 'New':

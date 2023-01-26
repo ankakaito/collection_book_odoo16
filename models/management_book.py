@@ -1,4 +1,4 @@
-from odoo import fields, models, api, _ 
+from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
 
 class BookManagement(models.Model):
@@ -10,6 +10,8 @@ class BookManagement(models.Model):
     book_id = fields.Many2one("list.book","Book Title")
     book_qty = fields.Integer(string="Qty")
     amount_borrowed = fields.Integer('Amount Borrowed')
+    #trans_ids = fields.One2many('book.transaction.line','transaction_id','Transaction Number')
+    #borrowing_count = fields.Integer(sring='Borrowing Count', compute='_computer_borrowing_count')
 
     @api.constrains('name')
     def check_serial(self):
