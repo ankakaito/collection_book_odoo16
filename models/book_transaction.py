@@ -10,6 +10,26 @@ class BookTransactionLine(models.Model):
     book_title = fields.Char('Book Title')
     qty = fields.Integer(string='Qty')
 
+    @api.onchange('management_id')
+    def onchange_management_id(self):
+        for rec in self:
+            if rec.management_id:
+                rec.book_title = rec.management_id.book_id.name
+
+    @api.constrains('qty')
+    def check_qty(self):
+        for rec in self:
+            check = self.env['book.management'].search([('book_qty', '<=', rec.qty)])
+            if check:
+                raise ValidationError(_("Qty Borrowed cannot more than Amount Stok The Book"))
+
+    @api.constrains('qty')
+    def check_qty(self):
+        for rec in self:
+            check = self.env['book.management'].search([('book_qty', '=', rec.qty)])
+            if check:
+                raise ValidationError(_("You Cannont Input Borrowed book with  0 Qty"))
+
     @api.constrains('qty')
     def check_val_qty(self):
         for rec in self:
@@ -17,19 +37,10 @@ class BookTransactionLine(models.Model):
                 raise ValidationError('Qty Input must more or less then 0')
 
     @api.constrains('qty')
-    def check_qty(self):
+    def check_val_qty(self):
         for rec in self:
-            check = self.env['book.management'].search([('book_qty', '<', rec.qty)])
-            if check:
-                raise ValidationError(_("Qty Borrowed cannot more than Amount Stok The Book"))
-
-    @api.onchange('management_id')
-    def onchange_management_id(self):
-        for rec in self:
-            if rec.management_id:
-                rec.book_title = rec.management_id.book_id.name
-
-
+            if rec.qty == 0:
+                raise ValidationError('Qty must more than 0')
 
 class BookTransaction(models.Model):
     _name = 'book.transaction'
@@ -46,6 +57,8 @@ class BookTransaction(models.Model):
     def func_done(self):
         if self.status == 'approved':
             self.status = 'done'
+            for line in self:
+                line.amount_borrowed = line.amount_borrowed + line.qty
 
     name = fields.Char(string="Transaction Number", default='New')
     member_id = fields.Many2one('member',"Member Name")
@@ -53,6 +66,7 @@ class BookTransaction(models.Model):
     returning_date= fields.Datetime(string="Returning Date")
     transaction_ids = fields.One2many('book.transaction.line','transaction_id',"List Book Management")
     status = fields.Selection([('draft','Draft'),('to_approve','To Approve'),('approved','To Approved'),('done','Done')], default='draft')
+
     @api.model
     def create(self, vals):
         if vals.get('name', 'New') == 'New':

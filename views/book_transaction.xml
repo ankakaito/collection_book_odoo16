@@ -6,21 +6,29 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button type="object" name="func_to_approve" string="To Approve" class="oe_highLight"/>
-                        <button type="object" name="func_approved" string="Approved" class="oe_highLight"/>
-                        <button type="object" name="func_done" string="Set To Done" class="oe_highLight"/>
+                        <button type="object" name="func_to_approve" string="To Approve" attrs="{'invisible': [('status', '!=', 'draft')]}" class="oe_highlight"/>
+                        <button type="object" name="func_approved" string="Approved" attrs="{'invisible': [('status', '!=', 'to_approve')]}" class="oe_highlight"/>
+                        <button type="object" name="func_done" string="Set To Done" attrs="{'invisible': [('status', '!=', 'approved')]}" class="oe_highlight"/>
                         <field name="status" widget="statusbar"/>
                     </header>
                     <sheet>
                         <group>
                             <group>
+                                <field name="name" attrs="{'readonly': [('status', '=', 'done')]}"/>
+                                <field name="member_id" attrs="{'required': [('status', '=', 'approved')],'readonly': [('status', '=', 'done')]}"/>
+                            </group>
+                            <group>
+                                <field name="borrowing_date" attrs="{'readonly': [('status', '=', 'done')]}"/>
+                                <field name="returning_date" attrs="{'required': [('status', '=', 'approved')],'readonly': [('status', '=', 'done')]}"/>
+                            </group>
+                            <!-- <group>
                                 <field name="name" readonly="1"/>
-                                <field name="member_id" required="1"/>
+                                <field name="member_id"/>
                             </group>
                             <group>
                                 <field name="borrowing_date" readonly="1"/>
-                                <field name="returning_date" required="1"/>
-                            </group>
+                                <field name="returning_date" />
+                            </group> -->
                         </group>
                         <notebook>
                             <page string="List Book Management">

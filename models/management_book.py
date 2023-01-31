@@ -23,7 +23,7 @@ class BookManagement(models.Model):
     @api.constrains('book_qty')
     def check_qty(self):
         for rec in self:
-            if rec.book_qty < 0:
+            if rec.book_qty <= 0:
                 raise ValidationError('Qty Input must more then  0')
 
 

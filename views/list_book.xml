@@ -60,8 +60,8 @@
         <menuitem
             id="master_menu"
             name="Master"
-            action=""
             parent="collection_book.root_list_book_menu"/>
+
         <menuitem
             id="list_master_submenu"
             name="Master Book"
