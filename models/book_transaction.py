@@ -42,6 +42,8 @@ class BookTransactionLine(models.Model):
             if rec.qty == 0:
                 raise ValidationError('Qty must more than 0')
 
+   # @api.constrains('status')
+
 class BookTransaction(models.Model):
     _name = 'book.transaction'
     _description = 'Book Transaction'
@@ -57,8 +59,8 @@ class BookTransaction(models.Model):
     def func_done(self):
         if self.status == 'approved':
             self.status = 'done'
-            for line in self:
-                line.amount_borrowed = line.amount_borrowed + line.qty
+           # for line in self:
+           #     line.amount_borrowed = line.amount_borrowed + line.qty
 
     name = fields.Char(string="Transaction Number", default='New')
     member_id = fields.Many2one('member',"Member Name")

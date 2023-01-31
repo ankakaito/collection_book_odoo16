@@ -32,10 +32,11 @@
                         </group>
                         <notebook>
                             <page string="List Book Management">
-                                <field name="transaction_ids">
+                                <field name="transaction_ids" attrs="{'readonly': [('status', '=', 'done')]}">
                                     <tree editable="bottom">
                                         <field name="management_id" required="1"/>
                                         <field name="book_title"/>
+                                        <!-- <field name="qty" required="1" attrs="{'readonly': [('status', '=', 'done')]}"/> -->
                                         <field name="qty" required="1"/>
                                     </tree>
                                 </field>
