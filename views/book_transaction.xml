@@ -21,14 +21,6 @@
                                 <field name="borrowing_date" attrs="{'readonly': [('status', '=', 'done')]}"/>
                                 <field name="returning_date" attrs="{'required': [('status', '=', 'approved')],'readonly': [('status', '=', 'done')]}"/>
                             </group>
-                            <!-- <group>
-                                <field name="name" readonly="1"/>
-                                <field name="member_id"/>
-                            </group>
-                            <group>
-                                <field name="borrowing_date" readonly="1"/>
-                                <field name="returning_date" />
-                            </group> -->
                         </group>
                         <notebook>
                             <page string="List Book Management">

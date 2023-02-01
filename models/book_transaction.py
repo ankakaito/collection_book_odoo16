@@ -16,19 +16,19 @@ class BookTransactionLine(models.Model):
             if rec.management_id:
                 rec.book_title = rec.management_id.book_id.name
 
-    @api.constrains('qty')
-    def check_qty(self):
-        for rec in self:
-            check = self.env['book.management'].search([('book_qty', '<=', rec.qty)])
-            if check:
-                raise ValidationError(_("Qty Borrowed cannot more than Amount Stok The Book"))
+   # @api.constrains('qty')
+   # def check_qty(self):
+   #     for rec in self:
+   #         check = self.env['book.management'].search([('book_qty', '<', rec.qty)])
+   #         if check:
+   #             raise ValidationError(_("Qty Borrowed cannot more than Amount of Stok The Book"))
 
-    @api.constrains('qty')
-    def check_qty(self):
-        for rec in self:
-            check = self.env['book.management'].search([('book_qty', '=', rec.qty)])
-            if check:
-                raise ValidationError(_("You Cannont Input Borrowed book with  0 Qty"))
+   # @api.constrains('qty')
+   # def check_qty(self):
+   #     for rec in self:
+   #         check = self.env['book.management'].search([('book_qty', '=', rec.qty)])
+   #         if check:
+   #             raise ValidationError(_("You Cannont Input Borrowed book with  0 Qty"))
 
     @api.constrains('qty')
     def check_val_qty(self):
@@ -41,8 +41,6 @@ class BookTransactionLine(models.Model):
         for rec in self:
             if rec.qty == 0:
                 raise ValidationError('Qty must more than 0')
-
-   # @api.constrains('status')
 
 class BookTransaction(models.Model):
     _name = 'book.transaction'
@@ -59,8 +57,15 @@ class BookTransaction(models.Model):
     def func_done(self):
         if self.status == 'approved':
             self.status = 'done'
-           # for line in self:
-           #     line.amount_borrowed = line.amount_borrowed + line.qty
+            total_qty = 0
+            if len(self.transaction_ids) > 0:
+                for transaction in self.transaction_ids:
+                    total_qty = transaction.management_id.amount_borrowed + transaction.qty
+                    if transaction.management_id.amount_borrowed >= transaction.qty:
+                        raise ValidationError(' The number your Book Is Out Of Stok Please Choose Another Book ')
+                    else:
+                        transaction.management_id.write({'amount_borrowed': total_qty})
+                        #transaction.management_id.write({'amount_borrowed': 0})
 
     name = fields.Char(string="Transaction Number", default='New')
     member_id = fields.Many2one('member',"Member Name")
