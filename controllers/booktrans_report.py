@@ -1,5 +1,5 @@
 from odoo import http
-from odoo.http impot content_disposition, request
+from odoo.http import content_disposition, request
 import io
 import xlsxwriter
 
@@ -17,11 +17,11 @@ class ReportExelTransBook(http.Controller):
         output = io.BytesIO()
         workbook = xlswriter.Workbook(output, {'in_memmory: True'})
 
-        # For sytle to managing Font and alligment
-        upper_style = workbook.add_format({'font_name': 'Times', 'bold': True, 'allign': 'left'})
-        upper_content_style = workbook.add_format({'font_name': 'Times', 'bold': False, 'allign': 'left'})
-        header_style = workbook.add_format({'font_name': 'Times', 'bold': True, 'left': 1, 'bottom': 1, 'right': 1, 'top': 1 'allign': 'center'})
-        text_style = workbook.add_format({'font_name': 'Times', 'bold': False, 'left': 1, 'bottom': 1, 'right': 1, 'top':1, 'allign':'left'})
+        # For sytle to managing Font and aligment
+        upper_style = workbook.add_format({'font_name': 'Times', 'bold': True, 'align': 'left'})
+        upper_content_style = workbook.add_format({'font_name': 'Times', 'bold': False, 'align': 'left'})
+        header_style = workbook.add_format({'font_name': 'Times', 'bold': True, 'left': 1, 'bottom': 1, 'right': 1, 'top': 1, 'align': 'center'})
+        text_style = workbook.add_format({'font_name': 'Times', 'bold': False, 'left': 1, 'bottom': 1, 'right': 1, 'top':1, 'align':'left'})
 
         # Looping the choosing from model
         for upper in data:
@@ -40,7 +40,7 @@ class ReportExelTransBook(http.Controller):
             sheet.set_column('C:C', 5)
             # Title Setup
             sheet.merge_range('A1:B1', 'Name', upper_style)
-            sheet.merge_range('A2:B2', 'Tanggal', upper_content_style)
+            sheet.merge_range('A2:B2', 'Date', upper_content_style)
 
             # set for upper content
             sheet.write(0, 2, upper.name, upper_style)

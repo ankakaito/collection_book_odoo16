@@ -9,12 +9,16 @@
                         <button type="object" name="func_to_approve" string="To Approve" attrs="{'invisible': [('status', '!=', 'draft')]}" class="oe_highlight"/>
                         <button type="object" name="func_approved" string="Approved" attrs="{'invisible': [('status', '!=', 'to_approve')]}" class="oe_highlight"/>
                         <button type="object" name="func_done" string="Set To Done" attrs="{'invisible': [('status', '!=', 'approved')]}" class="oe_highlight"/>
+                        <button type="object" name="get_excel_report" string="Set To Print" attrs="{'invisible': [('status', '!=', 'done')]}" class="oe_highlight"/>
                         <field name="status" widget="statusbar"/>
                     </header>
                     <sheet>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
                         <group>
                             <group>
-                                <field name="name" attrs="{'readonly': [('status', '=', 'done')]}"/>
+                                <!-- <field name="name" attrs="{'readonly': [('status', '=', 'done')]}"/> -->
                                 <field name="member_id" attrs="{'required': [('status', '=', 'approved')],'readonly': [('status', '=', 'done')]}"/>
                             </group>
                             <group>
@@ -25,7 +29,7 @@
                         <notebook>
                             <page string="List Book Management">
                                 <field name="transaction_ids" attrs="{'readonly': [('status', '=', 'done')]}">
-                                    <tree editable="bottom">
+                                    <tree editable="bottom" create="true" delete="true">
                                         <field name="management_id" required="1"/>
                                         <field name="book_title"/>
                                         <!-- <field name="qty" required="1" attrs="{'readonly': [('status', '=', 'done')]}"/> -->
