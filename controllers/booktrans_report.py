@@ -4,7 +4,7 @@ import io
 import xlsxwriter
 
 class ReportExelTransBook(http.Controller):
-    @http.route(['/collection_book/book_transaction_report_execl/<model("book.transaction"):data>',],type='http', auth="user", csrf=False)
+    @http.route(['/collection_book/book_transaction_report_excel/<model("book.transaction"):data>',],type='http', auth="user", csrf=False)
     def get_booktrans_excel_report(self, data=None, **args):
         response = request.make_respondse(
             none,

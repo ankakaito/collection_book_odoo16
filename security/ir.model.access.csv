@@ -6,3 +6,5 @@ access_collection_category,collection_book.category,model_category,,1,1,1,1
 access_collection_master_writer,collection_book.master_writer,model_master_writer,,1,1,1,1
 access_collection_book_transaction,collection_book.book_transaction,model_book_transaction,,1,1,1,1
 access_collection_book_transaction_line,collection_book.book_transaction_line,model_book_transaction_line,,1,1,1,1
+access_collection_wizard_book_transaction,collection_book.wizard_book_transaction,model_wizard_book_transaction,,1,1,1,1
+

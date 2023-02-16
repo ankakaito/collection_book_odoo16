@@ -16,21 +16,13 @@ class BookTransactionLine(models.Model):
             if rec.management_id:
                 rec.book_title = rec.management_id.book_id.name
 
+    def get_excel_report(self):
 
-
-   # @api.constrains('qty')
-   # def check_qty(self):
-   #     for rec in self:
-   #         check = self.env['book.management'].search([('book_qty', '<', rec.qty)])
-   #         if check:
-   #             raise ValidationError(_("Qty Borrowed cannot more than Amount of Stok The Book"))
-
-   # @api.constrains('qty')
-   # def check_qty(self):
-   #     for rec in self:
-   #         check = self.env['book.management'].search([('book_qty', '=', rec.qty)])
-   #         if check:
-   #             raise ValidationError(_("You Cannont Input Borrowed book with  0 Qty"))
+        return {
+            'type': 'ir.actions.act_url',
+            'url': '/collection_book/book_transaction_report_excel/%s' % (self.id),
+            'target': 'new',
+        }
 
     @api.constrains('qty')
     def check_val_qty(self):

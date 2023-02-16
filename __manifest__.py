@@ -34,6 +34,7 @@
         'views/master_writer.xml',
         'views/management_book.xml',
         'views/book_transaction.xml',
+        'wizards/book_transaction_wizards.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
