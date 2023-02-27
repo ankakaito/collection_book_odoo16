@@ -1,0 +1,43 @@
+<odoo>
+    <data>
+        <template id="master_book_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="collection_book.template_master_book_document"/>
+                </t>
+            </t>
+        </template>
+    </data>
+
+    <template id="template_master_book_document">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <h1>
+                    <t t-esc="o.name"/>
+                </h1>
+                Book Category : <t t-esc="o.category_ids.name"/> Launcing Date: (<span t-field="o.launcing_date"/>)  
+                <div>
+                    <table class="table" border="1">
+                        <tr class="text-center" style="background-color:#85929E;">
+                            <th>Writer Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>City</th>
+                            <th>Country</th>
+                        </tr>
+                        <t t-foreach="o.writer_ids" t-as="data">
+                            <tr class="text-center">
+                                <td><t t-esc="data.name"/></td>
+                                <td><t t-esc="data.phone"/></td>
+                                <td><t t-esc="data.email"/></td>
+                                <td><t t-esc="data.city"/></td>
+                                <td><t t-esc="data.country"/></td>
+                            </tr>
+                        </t>
+                    </table>
+                </div>
+            </div>
+        </t>
+
+    </template>
+</odoo>

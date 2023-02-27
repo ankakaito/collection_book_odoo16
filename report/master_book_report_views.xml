@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <record id="report_master_book_views" model="ir.actions.report">
+            <field name="name">Print Master Book</field>
+            <field name="model">list.book</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">collection_book.master_book_template</field>
+            <field name="report_file">collection_book.master_book_template</field>
+            <field name="binding_model_id" ref="collection_book.model_list_book"/>
+        </record>
+        
+    </data>
+</odoo>

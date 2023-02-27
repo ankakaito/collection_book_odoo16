@@ -68,7 +68,7 @@ class WizardBookTransaction(models.TransientModel):
 
         table_normal = wb.add_format({
             'valign': 'vcenter', 'font_size': 10, 'font_name': 'Calibri',
-            'align': 'left', 'bg_color': 'white', 'border': 1,
+            'align': 'center', 'bg_color': 'white', 'border': 1,
         })
 
         headers = self._generate_headers()
