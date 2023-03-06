@@ -17,7 +17,7 @@
                 </h1>
                 Book Category : <t t-esc="o.category_ids.name"/> Launcing Date: (<span t-field="o.launcing_date"/>)  
                 <div>
-                    <table class="table" border="1">
+                    <table class="table" border="1" width="100%" align="center">
                         <tr class="text-center" style="background-color:#85929E;">
                             <th>Writer Name</th>
                             <th>Phone</th>

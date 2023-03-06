@@ -5,16 +5,16 @@ class BookTransactionLine(models.Model):
     _name = 'book.transaction.line'
     _description = 'Book Transaction Line'
 
-    management_id = fields.Many2one('book.management','Serial Number')
+    management_id = fields.Many2one('book.management','Book Title')
     transaction_id = fields.Many2one('book.transaction', 'Transaction ID')
-    book_title = fields.Char('Book Title')
+    #book_title = fields.Char('Book Title')
     qty = fields.Integer(string='Qty')
 
-    @api.onchange('management_id')
-    def onchange_management_id(self):
-        for rec in self:
-            if rec.management_id:
-                rec.book_title = rec.management_id.book_id.name
+    # @api.onchange('management_id')
+    # def onchange_management_id(self):
+    #     for rec in self:
+    #         if rec.management_id:
+    #             rec.book_title = rec.management_id.book_id.name
 
     def get_excel_report(self):
 
@@ -47,13 +47,14 @@ class BookTransaction(models.Model):
                 raise ValidationError('Please Fill The Transaction Line Before Settle to Approve')
             else:
                 self.status = 'to_approve'
-
+                self.validation = "processing"
     def func_approved(self):
         if self.status == 'to_approve':
             if len(self.transaction_ids) == 0:
                 raise ValidationError('Please Fill The Transaction Line Before Settle to Approve')
             else:
                 self.status = 'approved'
+                self.validation = "processing"
 
     def func_done(self):
         if self.status == 'approved':
@@ -70,14 +71,19 @@ class BookTransaction(models.Model):
                         else:
                             transaction.management_id.write({'amount_borrowed': total_qty})
                             self.status = 'done'
+                            self.validation = 'borrowed'
                         #transaction.management_id.write({'amount_borrowed': 0})
 
+   # def get_excel_report(self):
+   #     return {
+   #          'type': 'ir.actions.act_url',
+   #          'url': '/collection_book/book_transaction_report_execl/%s' % (self.id),
+   #          'target': 'new',
+   #     }
+
+    #@api.multi
     def get_excel_report(self):
-        return {
-             'type': 'ir.actions.act_url',
-             'url': '/collection_book/book_transaction_report_execl/%s' % (self.id),
-             'target': 'new',
-        }
+        return self.env.ref('collection_book.report_master_transaction_views').report_action(self)
 
     name = fields.Char(string="Transaction Number", default='New')
     member_id = fields.Many2one('member',"Member Name")
@@ -85,6 +91,7 @@ class BookTransaction(models.Model):
     returning_date= fields.Datetime(string="Returning Date")
     transaction_ids = fields.One2many('book.transaction.line','transaction_id',"List Book Management", ondelete='cascade')
     status = fields.Selection([('draft','Draft'),('to_approve','To Approve'),('approved','Approved'),('done','Done')], default='draft')
+    validation = fields.Selection([('processing','Processing'),('borrowed','Borrowed'),('returned','Returned')], string="Transaction Status",  default='processing')
 
     @api.model
     def create(self, vals):
@@ -93,4 +100,17 @@ class BookTransaction(models.Model):
                 'seq.book.transaction') or 'New'
         result = super(BookTransaction, self).create(vals)
         return result
-
+    
+    @api.onchange('transaction_ids')
+    def _onchange_management_id(self):
+        for rec in self:
+            for line in rec.transaction_ids:
+                check_line = self._check_duplicate_ids(rec.transaction_ids, line.management_id.id, line.id)
+                if check_line:
+                    raise ValidationError('Cant duplicate book')
+    
+    def _check_duplicate_ids(self, line_ids, management_id, id):
+        for line in line_ids:
+            if line.management_id.id == management_id and line.id != id:
+                return True
+        return False

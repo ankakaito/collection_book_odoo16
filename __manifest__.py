@@ -36,6 +36,8 @@
         'views/book_transaction.xml',
         'report/master_book_report_template.xml',
         'report/master_book_report_views.xml',
+        'report/master_transaction_report.xml',
+        'report/master_transaction_report_template.xml',
         'wizards/book_transaction_wizards.xml'
     ],
     # only loaded in demonstration mode

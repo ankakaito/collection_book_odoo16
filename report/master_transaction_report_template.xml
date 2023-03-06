@@ -1,0 +1,38 @@
+<odoo>
+    <data>
+        <template id="master_book_transaction">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="collection_book.template_master_transaction"/>
+                </t>
+            </t>
+        </template>
+    </data>
+    <template id="template_master_transaction">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <h1>
+                    <t t-esc="o.name"/>
+                </h1>
+                Member Name : <t t-esc="o.member_id.name"/><br/>
+                Borrowing Date : ( <span t-field="o.borrowing_date"/> ) Returning Date: ( <span t-field="o.returning_date"/> ) 
+                <div class="row">
+                    <table class="table" border="1" width="100%">
+                        <tr class="text-center" style="background-color:#85929E;">
+                            <th width="10%">No.</th>
+                            <th width="80%">Book Title</th>
+                            <th width="10%">Qty</th>
+                        </tr>
+                         <t t-foreach="o.transaction_ids" t-as="data">
+                             <tr class="text-center" align="center">
+                                 <td><span t-esc="data_index + 1"/></td>
+                                <td>[<t t-esc="data.management_id.name"/>] <t t-esc="data.management_id.book_id.name"/></td>
+                                <td><t t-esc="data.qty"/></td>
+                            </tr>
+                        </t>
+                    </table>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

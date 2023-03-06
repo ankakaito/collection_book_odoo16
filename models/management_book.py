@@ -26,4 +26,8 @@ class BookManagement(models.Model):
             if rec.book_qty <= 0:
                 raise ValidationError('Qty Input must more then  0')
 
-
+    def name_get(self):
+        res = []
+        for rec in self:
+            res.append((rec.id, '[%s] %s' % (rec.name, rec.book_id.name)))
+        return res

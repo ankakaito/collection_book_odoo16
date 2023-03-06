@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <record id="report_master_transaction_views" model="ir.actions.report">
+            <field name="name">Print Transaction Book</field>
+            <field name="model">book.transaction</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">collection_book.master_book_transaction</field>
+            <field name="report_file">collection_book.master_book_transaction</field>
+            <field name="binding_model_id" ref="collection_book.model_book_transaction"/>
+        </record>
+
+    </data>
+</odoo>
