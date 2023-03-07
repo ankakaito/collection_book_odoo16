@@ -21,8 +21,9 @@
                                 <field name="member_id" domain="[('state', '=', 'aproved' )]" attrs="{'required': [('status', '=', 'approved')],'readonly': [('status', '=', 'done')]}"/>
                             </group>
                             <group>
-                                <field name="borrowing_date" attrs="{'readonly': [('status', '=', 'done')]}"/>
+                                <field name="borrowing_date" readonly="1" attrs="{'readonly': [('status', '=', 'done')]}"/>
                                 <field name="returning_date" attrs="{'required': [('status', '=', 'approved')],'readonly': [('status', '=', 'done')]}"/>
+                                <field name="number_of_days" readonly="1"/>
                                 <field name="validation" readonly="1" decoration-info="validation=='processing'" decoration-danger="validation=='borrowed'" decoration-success="validation=='returned'" attrs="{'invisible':[('status', '=', 'draft')]}"/>
                             </group>
                         </group>
